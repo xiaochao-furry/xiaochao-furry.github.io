@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小超作业公示板 - 智能教学一体机作业展示软件</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #e3f2fd;
+            --secondary-blue: #bbdefb;
+            --accent-blue: #64b5f6;
+            --dark-blue: #1976d2;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #ffffff;
+            --shadow: rgba(100, 181, 246, 0.15);
+            --furry-orange: #ff9800;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-blue);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            padding: 20px 0;
+            box-shadow: 0 4px 12px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.8rem;
+            color: var(--dark-blue);
+        }
+        
+        .logo-text h1 {
+            color: var(--dark-blue);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .logo-text p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            padding: 80px 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23e3f2fd"/><path d="M0,50 Q25,40 50,50 T100,50 L100,100 L0,100 Z" fill="%23bbdefb" opacity="0.3"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .hero-text h2 {
+            font-size: 2.8rem;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        
+        .highlight {
+            color: var(--furry-orange);
+            font-weight: bold;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+        }
+        
+        .cta-button:hover {
+            background-color: var(--accent-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(25, 118, 210, 0.3);
+        }
+        
+        .hero-image {
+            text-align: center;
+        }
+        
+        .software-preview {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .software-preview:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--dark-blue), var(--accent-blue));
+        }
+        
+        .screen {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .screen-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+            font-weight: bold;
+        }
+        
+        .screen-content {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 180px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+        
+        /* 功能区域 */
+        .features {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background-color: var(--primary-blue);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s;
+            border-top: 5px solid var(--accent-blue);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(100, 181, 246, 0.2);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-card p {
+            color: var(--text-light);
+        }
+        
+        /* 系统要求 */
+        .requirements {
+            padding: 80px 0;
+            background-color: var(--secondary-blue);
+        }
+        
+        .requirements-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .req-list {
+            list-style: none;
+        }
+        
+        .req-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(25, 118, 210, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .req-list i {
+            color: var(--dark-blue);
+            font-size: 1.5rem;
+        }
+        
+        .note-box {
+            background-color: var(--primary-blue);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 5px solid var(--furry-orange);
+        }
+        
+        .note-box h4 {
+            color: var(--furry-orange);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        /* 下载区域 */
+        .download {
+            padding: 80px 0;
+            background-color: var(--white);
+            text-align: center;
+        }
+        
+        .download-box {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            border-radius: 15px;
+            padding: 50px 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .download-box h3 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        .version-info {
+            background-color: white;
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            color: var(--dark-blue);
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* 福瑞特色区域 */
+        .furry-section {
+            padding: 60px 0;
+            background-color: var(--primary-blue);
+            text-align: center;
+        }
+        
+        .furry-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .furry-icon {
+            font-size: 4rem;
+            color: var(--furry-orange);
+            margin-bottom: 20px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #bbdefb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbdefb;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-content, .requirements-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-text h2 {
+                font-size: 2.3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero-text h2 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网站头部 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>小超作业公示板</h1>
+                    <p>专为电教委员设计的智能作业展示软件</p>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#features">功能特色</a></li>
+                    <li><a href="#requirements">系统要求</a></li>
+                    <li><a href="#download">下载</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h2>让作业通知变得<span class="highlight"> 简单高效</span></h2>
+                <p>专为智能教学一体机设计的作业公示软件，帮助电教委员快速展示当天作业内容。支持文本、图片插入，<span class="highlight">文本朗读通知</span>和<span class="highlight">走马灯效果</span>，操作简单，功能强大。</p>
+                <a href="#download" class="cta-button">
+                    <i class="fas fa-download"></i> 立即下载
+                </a>
+            </div>
+            <div class="hero-image">
+                <div class="software-preview">
+                    <img src="images/software-interface.png" alt="小超作业公示板软件主界面" class="software-screenshot">
+            <div class="feature-icon">
+                <i class="fas fa-bullhorn"></i>
+            </div>
+        <p>作业内容一键语音播报，确保每位同学都能听到</p>
+    </div>
+</div>
+        </div>
+    </section>
+
+    <!-- 功能特色区域 -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心功能特色</h2>
+                <p>专为电教委员设计的简单易用功能，让作业公示变得更加高效有趣</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-edit"></i> 直观内容编辑</h3>
+                    <p>简洁直观的编辑界面，支持文本和图片插入，轻松创建每日作业公示内容。拖拽调整、字体样式、颜色选择一应俱全。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-volume-up"></i> 文本语音朗读</h3>
+                    <p>一键将作业内容转换为语音播报，确保每位同学都能清楚听到当天作业。支持调整语速、音量，并可设置定时自动播报。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-running"></i> 走马灯效果</h3>
+                    <p>独特的走马灯滚动展示效果，让作业内容在屏幕上流动显示，吸引学生注意力，确保作业信息不被错过。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-desktop"></i> 一体机优化</h3>
+                    <p>专门针对智能教学一体机大屏幕优化，界面元素大小合适，触控操作流畅，电教委员使用更加便捷。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-save"></i> 模板保存</h3>
+                    <p>支持保存常用作业模板，一键调用，大幅减少重复输入。可按学科、星期分类管理，提高工作效率。</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-user-friends"></i> 电教委员专属</h3>
+                    <p>专门为班级电教委员设计，操作流程简单直观，无需复杂培训即可上手使用，减轻电教委员工作负担。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统要求区域 -->
+    <section class="requirements" id="requirements">
+        <div class="container requirements-content">
+            <div>
+                <div class="section-title" style="text-align: left;">
+                    <h2>系统要求</h2>
+                    <p>小超作业公示板兼容性广泛，适用于大多数教学环境</p>
+                </div>
+                <ul class="req-list">
+                    <li><i class="fas fa-window-restore"></i> 操作系统：Windows 7/8/10/11 (32位或64位)</li>
+
+                </ul>
+                <div class="note-box">
+                    <h4><i class="fas fa-paw"></i> 小超特别提示</h4>
+                    <p>本软件由小超专门为教育场景设计，注重用户体验和易用性。软件界面友好，操作简单，即使是对电脑不熟悉的电教委员也能轻松上手。</p>
+                </div>
+            </div>
+            <div>
+                <div class="software-preview">
+                    <div class="screen">
+                        <div class="screen-header">
+                            <span>系统兼容性</span>
+                            <span><i class="fas fa-check-circle" style="color: #4CAF50;"></i> 兼容以下</span>
+                        </div>
+                        <div class="screen-content">
+                            <p><strong>满足运行要求：</strong></p>
+                            <p>✓ Windows 7</p>
+                            <p>✓ 32位系统</p>
+
+                            <p style="margin-top: 15px; color: var(--dark-blue);">
+                                <i class="fas fa-info-circle"></i> 适用于大多数学校教学一体机
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 福瑞特色区域 -->
+    <section class="furry-section">
+        <div class="container furry-content">
+            <div class="furry-icon">
+                <i class="fas fa-paw"></i>
+            </div>
+            <h2>由小超精心打造</h2>
+            <p style="font-size: 1.2rem; margin-top: 15px;">"小超作业公示板"由小超专门为电教委员设计，致力于简化作业公示流程，让科技更好地服务教育。软件中融入了开发者对教育场景的深入理解和对用户体验的细致考量。</p>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section class="download" id="download">
+        <div class="container">
+            <div class="download-box">
+                <h3>立即下载小超作业公示板</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 20px; color: var(--text-light);">专为电教委员设计的智能作业展示工具</p>
+                
+                <div class="version-info">
+                    <i class="fas fa-download"></i> 当前版本：v2.5.0
+                </div>
+                
+                <p style="margin-bottom: 30px; font-size: 1.1rem;">支持系统：Windows 7及以上 (32位/64位)</p>
+                
+                <a href="#" class="cta-button" style="font-size: 1.2rem; padding: 16px 40px;">
+                    <i class="fas fa-cloud-download-alt"></i> 下载安装包 (xiaochao-hwntb-setup.exe)
+                </a>
+                
+                <p style="margin-top: 25px; color: var(--text-light);">
+                    下载后直接运行安装程序，按照向导完成安装即可使用。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>小超作业公示板</h3>
+                    <p>专为智能教学一体机设计的作业展示软件，帮助电教委员高效完成作业公示工作。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#features">功能特色</a></li>
+                        <li><a href="#requirements">系统要求</a></li>
+                        <li><a href="#download">软件下载</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>联系开发者</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> https://space.bilibili.com/1103206739?</li>
+                        <li><i class="fas fa-paw"></i> 小超出品</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 小超作业公示板 </p>
+                <p style="margin-top: 5px;">ai太好用了你知道吗</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动到锚点
+        document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if(this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // 下载按钮点击事件
+        document.querySelector('.download .cta-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('感谢您对小超作业公示板的关注！\n\n由于这是一个演示网站，下载功能暂不可用。\n\n在实际官网中，这里会提供软件安装包的下载链接。\n\n最低系统要求：Windows 7 32位及以上');
+        });
+        
+        // 添加一些简单的交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为功能卡片添加延迟显示效果
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s, transform 0.5s';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + index * 100);
+            });
+            
+            // 福瑞特色区域动画
+            const furryIcon = document.querySelector('.furry-icon i');
+            furryIcon.style.transform = 'scale(0)';
+            
+            setTimeout(() => {
+                furryIcon.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                furryIcon.style.transform = 'scale(1) rotate(360deg)';
+            }, 800);
+        });
+    </script>
+</body>
+</html>
